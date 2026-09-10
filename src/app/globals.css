@@ -1,0 +1,295 @@
+@import "tailwindcss";
+
+/* ===========================================================================
+   AM AUTOMOTIVE — "Used and Brand New Premium Cars✨"
+   مصر الجديدة امام الكلية الحربية بوابة ٧ داخل chillout auto service
+   A general dealer: nine reachable cars, 9,000 → 175,000 km, nineteen model
+   years, one price, one sold. The floor has no type, so the page's ground is
+   not a marque colour — it is the cognac leather that recurs through their
+   cabins. Gold is their own shield and nothing else. Red belongs to the one
+   car they marked 🚨SOLD🚨 and must appear nowhere else on the page.
+   LATIN-FIRST build: body carries the Latin faces, [dir="rtl"] overrides.
+   =========================================================================== */
+
+@theme {
+  /* --- the cabins --------------------------------------------------------- */
+  --color-ground:   #6B4A2E; /* cognac upholstery — a BROWN, never neutralised */
+  --color-ground-2: #5D4028; /* alternate band / recessed section */
+  --color-ink:      #F6F1E9; /* primary text */
+  --color-muted:    #D6C6B2; /* AA on --ground; never go darker */
+  --color-panel:    #241811; /* deep panel / canvas ground */
+  --color-panel-2:  #322317; /* raised panel inside a canvas */
+  --color-gold:     #C9A24B; /* their shield. Rules, the mark, small labels. */
+  --color-sold:     #C0202B; /* the E200. ONE car. Nowhere else. */
+
+  /* --- type ---------------------------------------------------------------
+     The layout re-declares these via next/font; the var() fallbacks keep the
+     page correct whichever name the font loader lands on. */
+  --font-display:    var(--font-cormorant, "Cormorant Garamond"), Georgia, "Times New Roman", serif;
+  --font-text:       var(--font-figtree, "Figtree"), ui-sans-serif, system-ui, "Helvetica Neue", sans-serif;
+  --font-ar-display: var(--font-rakkas, "Rakkas"), "Noto Naskh Arabic", serif;
+  --font-ar:         var(--font-cairo, "Cairo"), "Segoe UI", ui-sans-serif, sans-serif;
+}
+
+/* ============================ base ========================================
+   Arabic keys off [dir="rtl"] ONLY. Do not add a [lang] selector anywhere.
+   ========================================================================= */
+
+html {
+  scroll-behavior: auto; /* Lenis drives scrolling */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-ground);
+  color: var(--color-ink);
+  font-family: var(--font-text);
+  font-weight: 400;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+::selection { background: var(--color-gold); color: var(--color-panel); }
+
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+img, video, canvas { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; }
+
+/* ============================ utilities ===================================
+   In @layer components so Tailwind utilities can still override them.
+   .latin is deliberately UNLAYERED further down — it must never lose.
+   ========================================================================= */
+
+@layer components {
+  .display {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.04;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+  }
+
+  .fine {
+    font-family: var(--font-text);
+    font-size: 11px;
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* the recurring trade phrases: Factory Paint · Maintenance at the Agent ·
+     Mint condition · All service done · New profile · License 2 years */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.34em 0.85em;
+    border: 1px solid color-mix(in oklab, currentColor 32%, transparent);
+    border-radius: 999px;
+    font-family: var(--font-text);
+    font-size: 11px;
+    line-height: 1.4;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .rule {
+    display: block;
+    width: 100%;
+    height: 1px;
+    border: 0;
+    background: currentColor;
+    opacity: 0.22;
+  }
+
+  /* their shield mark drawn as a hairline — labels and section heads only */
+  .rule-gold {
+    display: block;
+    width: 100%;
+    height: 1px;
+    border: 0;
+    opacity: 1;
+    background: linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--color-gold) 78%, transparent) 0%,
+      color-mix(in oklab, var(--color-gold) 30%, transparent) 62%,
+      transparent 100%
+    );
+  }
+
+  /* ONE car. The 2015 E200 with their own 🚨SOLD🚨 banner. Nowhere else. */
+  .sold-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.26em 0.7em;
+    border-radius: 999px;
+    background: var(--color-sold);
+    color: var(--color-ink);
+    font-family: var(--font-text);
+    font-size: 10.5px;
+    line-height: 1.5;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+}
+
+/* ============================ RTL — OUTSIDE any @layer ====================
+   Keyed off [dir], never [lang]. Unlayered so Tailwind cannot win.
+   ========================================================================= */
+
+/* Wraps every Latin/numeric fragment inside Arabic copy — a bare digit run
+   (170,000 km, 2,850,000, 01001234567) reorders itself in RTL without this. */
+.latin {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-block;
+}
+
+html[dir="rtl"] body {
+  font-family: var(--font-ar);
+  font-weight: 400;
+  line-height: 1.95; /* Arabic needs the air */
+}
+
+html[dir="rtl"] .display {
+  font-family: var(--font-ar-display);
+  font-weight: 400;
+  line-height: 1.42;
+  letter-spacing: 0;
+}
+
+/* the tracked-out cap rules are a Latin device; reset them under Arabic */
+html[dir="rtl"] .fine,
+html[dir="rtl"] .chip,
+html[dir="rtl"] .sold-mark {
+  font-family: var(--font-ar);
+  font-size: 12.5px;
+  line-height: 1.7;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+[dir="rtl"] p,
+[dir="rtl"] li,
+[dir="rtl"] dd,
+[dir="rtl"] dt { line-height: 2; }
+
+/* Latin fragments inside Arabic copy re-assert the Latin text face. */
+[dir="rtl"] .latin { font-family: var(--font-text); }
+
+/* Marque names and odometers set inside an Arabic display heading keep the
+   Latin display face so they sit at the weight Rakkas gives beside them. */
+[dir="rtl"] .display .latin {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.012em;
+}
+
+/* ============================ "the ledger" ================================
+   Content arrives one ruled line at a time, the way a ledger is written down:
+   the RULE is drawn first, and only once it has finished does the entry
+   itself appear on it. The rule is a separate pseudo-element, not a garnish
+   travelling with the content.
+   [data-ledger]       observed by IntersectionObserver, gains [data-seen]
+   [data-ledger-item]  children; --led-i is a deterministic integer index set
+                       by the section code (never Math.random)
+   Item content must be ELEMENT children — the fade is applied to
+   [data-ledger-item] > * so the rule can stay visible while they wait.
+   Never animate clip-path on [data-ledger]: it collapses the intersection
+   rect and the reveal silently never fires.
+   ========================================================================= */
+
+[data-ledger] [data-ledger-item] {
+  position: relative;
+  padding-block-start: 0.9rem;
+}
+
+[data-ledger] [data-ledger-item]::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: 1px;
+  background: color-mix(in oklab, var(--color-gold) 46%, transparent);
+  transform: scaleX(0);
+  transform-origin: left center; /* reading-direction start */
+  pointer-events: none;
+}
+
+[dir="rtl"] [data-ledger] [data-ledger-item]::before {
+  transform-origin: right center; /* mirrored under RTL */
+}
+
+[data-ledger] [data-ledger-item] > * {
+  opacity: 0;
+  transform: translateY(5px);
+}
+
+[data-ledger][data-seen] [data-ledger-item]::before {
+  transform: scaleX(1);
+  transition: transform 520ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: calc(var(--led-i, 0) * 92ms);
+  will-change: transform;
+}
+
+/* the entry follows the rule — it starts only once the rule has completed */
+[data-ledger][data-seen] [data-ledger-item] > * {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 440ms cubic-bezier(0.33, 0.9, 0.4, 1),
+    transform 440ms cubic-bezier(0.33, 0.9, 0.4, 1);
+  transition-delay: calc(var(--led-i, 0) * 92ms + 540ms);
+  will-change: opacity, transform;
+}
+
+/* JS off — the layout ships <noscript><style> adding .no-js to <html> */
+.no-js [data-ledger] [data-ledger-item] > * {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+.no-js [data-ledger] [data-ledger-item]::before {
+  transform: scaleX(1) !important;
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-ledger] [data-ledger-item] > *,
+  [data-ledger][data-seen] [data-ledger-item] > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    will-change: auto;
+  }
+  [data-ledger] [data-ledger-item]::before,
+  [data-ledger][data-seen] [data-ledger-item]::before {
+    transform: scaleX(1) !important;
+    transition: none !important;
+    will-change: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
