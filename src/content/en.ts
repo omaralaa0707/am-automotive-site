@@ -129,9 +129,7 @@ export const en: SiteContentExt = {
     cta: "Call the showroom",
   },
   footer: {
-    disclaimer:
-      "This is an unofficial concept design, built as a portfolio exercise. It is not affiliated with, endorsed by, or operated by {brand}. All photography and every quoted line remain the dealership's own.",
-    rights: "Concept design. Photography and text: {brand}.",
+    rights: "© AM Automotive. All rights reserved.",
   },
   a11y: {
     toggleLanguage: "Switch to Arabic",

@@ -1363,16 +1363,6 @@ function Footer() {
 
           {/* Bilingual, because the disclaimer has to hold in both languages. */}
           <div className="min-w-0 max-w-[56ch]">
-            <p className="text-[0.78rem] leading-relaxed text-muted">
-              <T s={en.footer.disclaimer} />
-            </p>
-            <p
-              dir="rtl"
-              lang="ar"
-              className="font-ar mt-4 text-[0.8rem] leading-relaxed text-muted"
-            >
-              <T s={ar.footer.disclaimer} />
-            </p>
           </div>
         </div>
 
